@@ -45,6 +45,16 @@
   --text-label: 700 14px/1.5 var(--font-family);
   --text-number: 700 36px/1.2 var(--font-family);
 
+  /* Spacing · Radius (Figma Eco 변수) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+  --green-300: #8ed3a4;
+
   /* Layout */
   --layout-max: 1440px;
   --content-max: 1280px;
