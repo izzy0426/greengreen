@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ChipGroup } from '../../components/Chip'
 import { wonShort } from '../../lib/format'
@@ -25,7 +25,20 @@ export function UnitList({
     for (const u of units) sum.set(u.sector, (sum.get(u.sector) ?? 0) + u.cost5y.now)
     return [...sum.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([s]) => s)
   }, [units])
-  const list = sector === 'all' ? units : units.filter((u) => u.sector === sector)
+  const all = sector === 'all' ? units : units.filter((u) => u.sector === sector)
+  // 처음엔 60개만 그리고, 목록 끝이 보이면 60개씩 더 (758개를 한 번에 그리면 휴대폰에서 느림)
+  const [shown, setShown] = useState(60)
+  const more = useRef<HTMLLIElement>(null)
+  const selIndex = selectedId ? all.findIndex((u) => u.id === selectedId) : -1
+  const limit = Math.max(shown, selIndex + 1)
+  useEffect(() => {
+    const el = more.current
+    if (!el) return
+    const io = new IntersectionObserver((e) => e[0].isIntersecting && setShown((n) => n + 60), { rootMargin: '200px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [limit, all.length])
+  const list = all.slice(0, limit)
   const q = price === 'now' ? '' : `?price=${price}`
 
   return (
@@ -59,6 +72,7 @@ export function UnitList({
             </Link>
           </li>
         ))}
+        {limit < all.length && <li ref={more} className="unit-list__more caption">목록 더 불러오는 중…</li>}
       </ol>
     </aside>
   )

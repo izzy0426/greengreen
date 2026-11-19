@@ -60,6 +60,7 @@ export function Stage({ combo, base, levers, toast }: { combo: LabCombo; base: L
         )}
       </AnimatePresence>
 
+      <div className="pins">
       <Pin x={8} y={23} color="var(--color-chart-1)" label="발전 2030 탄소비용" value={`${trillion(p.powerCost2030)}조`}
         delta={delta(p.powerCost2030, b.powerCost2030, (v) => `${trillion(v)}조`, `구매 ${mt(p.powerPurchase2030)}백만 t`)} />
       <Pin x={38} y={28} color="var(--color-chart-2)" label="철강 · 시멘트 (탄소누출)" value="무상 100%" assumed={isAssumed(4, levers[4])}
@@ -69,11 +70,13 @@ export function Stage({ combo, base, levers, toast }: { combo: LabCombo; base: L
       <Pin x={70} y={50} color="var(--color-chart-5)" label="전기요금 전가" value="전가율 가정" assumed />
       <Pin x={24} y={58} color="var(--color-data-short)" label="한전 부채" value={`최대 ${trillion(p.powerCost2030)}조`}
         delta={p.powerCost2030 === b.powerCost2030 ? { text: '요금 동결 시', dir: null } : delta(p.powerCost2030, b.powerCost2030, (v) => `${trillion(v)}조`, '')} />
+      </div>
 
       <div className="price-box">
         <p>배출권 가격 <span className="visually-hidden">({PRICE_LABEL[priceOf(levers)]}, 2030년)</span></p>
         <p className="price-box__value">
-          {int(price)}원 <span aria-label={price > price26 ? '2026년보다 오름' : '2026년보다 내림'}>{price > price26 ? '▲' : '▼'}</span>
+          {int(price)}원 <span aria-hidden="true">{price > price26 ? '▲' : '▼'}</span>
+          <span className="visually-hidden">{price > price26 ? '2026년보다 오름' : '2026년보다 내림'}</span>
         </p>
       </div>
 
@@ -142,7 +145,8 @@ function CountText({ text }: { text: string }) {
   if (!m || isNaN(target)) return <>{text}</>
   const shown = reduce ? target : v
   return (
-    <span aria-label={text}>
+    <span>
+      <span className="visually-hidden">{text}</span>
       <span aria-hidden="true">{m[1]}{shown.toLocaleString('ko-KR', { minimumFractionDigits: digits, maximumFractionDigits: digits })}{m[3]}</span>
     </span>
   )

@@ -13,6 +13,8 @@ body {
 }
 
 body {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
   background: var(--color-bg-page);
   color: var(--color-text-primary);
   font: var(--text-body);
@@ -62,5 +64,29 @@ a {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+.skip-link {
+  position: absolute;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: 10px;
+  background: var(--color-bg-inverse);
+  color: white;
+  font: var(--text-label);
+}
+.skip-link:focus {
+  top: 12px;
+}
+#main:focus {
+  outline: none;
+}
+
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none;
   }
 }

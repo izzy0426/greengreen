@@ -144,7 +144,7 @@
 .steps i.on {
   background: var(--color-bg-brand);
 }
-.hbars--light em {
+.result .hbars.hbars--light em {
   color: var(--color-text-primary);
 }
 .split {
@@ -173,6 +173,7 @@
   min-height: 190px;
 }
 .grade-cols > div {
+  min-width: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -196,7 +197,7 @@
   height: 8px;
   border-radius: 50%;
 }
-.panel--muted {
+.result .panel.panel--muted {
   opacity: 0.6;
 }
 .ghost-bar {
@@ -204,11 +205,11 @@
   border-radius: 5px;
   background: var(--color-bg-subtle);
 }
-.panel--dark {
+.result .panel.panel--dark {
   background: var(--color-bg-inverse);
   color: white;
 }
-.panel--dark .btn {
+.result .panel--dark .btn {
   align-self: flex-start;
 }
 
@@ -235,6 +236,20 @@
   }
   .result .top10 th:nth-child(4),
   .result .top10 td:nth-child(4) {
+    display: none;
+  }
+}
+
+/* 연한 바탕 위 보조 글자 대비 (결정 기록 D33) */
+.card-s--brand .caption,
+.card-s--subtle .caption,
+.summary .secondary,
+.summary .caption {
+  color: #3f4741;
+}
+
+@media (max-width: 767px) {
+  .header__actions .result-submit {
     display: none;
   }
 }

@@ -19,12 +19,22 @@ export default function LabPage() {
     document.title = '실험실 · 탄소청구서'
   }, [])
 
-  const change = (i: number, step: Step) => {
-    const next = [...levers] as Levers
+  // 키를 빠르게 여러 번 눌러도 매번 최신 값에서 한 단계씩 (주소 갱신을 기다리지 않음)
+  const latest = useRef(levers)
+  useEffect(() => {
+    latest.current = levers
+  }, [levers])
+
+  const change = (i: number, to: Step | ((cur: Step) => Step)) => {
+    const prev = latest.current
+    const step = typeof to === 'function' ? to(prev[i]) : to
+    if (step === prev[i]) return
+    const next = [...prev] as Levers
     next[i] = step
+    latest.current = next
     setLevers(next)
     if (data) {
-      const before = data.combos[comboKey(levers)].meter
+      const before = data.combos[comboKey(prev)].meter
       const after = data.combos[comboKey(next)].meter
       const fmt = (x: number) => `${x > 0 ? '+' : x < 0 ? '−' : ''}${pct(Math.abs(x), 1)}%`
       // 연달아 바뀌면 마지막 것만 (명세서 7장)

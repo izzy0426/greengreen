@@ -42,7 +42,7 @@ export function leverDetail(i: number, step: Step, data: LabData): string {
 const GROUPS = ['가격', '할당', '이월', '전기요금', '기업 대응'] as const
 
 /** 레버 바 9개 — 클릭·드래그·키보드(↑↓)로 단계 1~4 */
-export function LeverBar({ levers, data, onChange, onHover }: { levers: Levers; data: LabData; onChange: (i: number, s: Step) => void; onHover: (i: number | null) => void }) {
+export function LeverBar({ levers, data, onChange, onHover }: { levers: Levers; data: LabData; onChange: (i: number, s: Step | ((cur: Step) => Step)) => void; onHover: (i: number | null) => void }) {
   return (
     <div className="lever-bar" role="group" aria-label="4차 계획 레버">
       <div className="lever-bar__groups">
@@ -71,7 +71,7 @@ export function LeverBar({ levers, data, onChange, onHover }: { levers: Levers; 
   )
 }
 
-function Lever({ i, step, data, onChange, onHover }: { i: number; step: Step; data: LabData; onChange: (i: number, s: Step) => void; onHover: (i: number | null) => void }) {
+function Lever({ i, step, data, onChange, onHover }: { i: number; step: Step; data: LabData; onChange: (i: number, s: Step | ((cur: Step) => Step)) => void; onHover: (i: number | null) => void }) {
   const def = LEVERS[i]
   const track = useRef<HTMLDivElement>(null)
   const fromY = (clientY: number): Step => {
@@ -106,8 +106,9 @@ function Lever({ i, step, data, onChange, onHover }: { i: number; step: Step; da
           const down = e.key === 'ArrowDown' || e.key === 'ArrowLeft'
           if (up || down || e.key === 'Home' || e.key === 'End') {
             e.preventDefault()
-            const next = e.key === 'Home' ? 1 : e.key === 'End' ? 4 : Math.min(4, Math.max(1, step + (up ? 1 : -1)))
-            if (next !== step) onChange(i, next as Step)
+            if (e.key === 'Home') onChange(i, 1)
+            else if (e.key === 'End') onChange(i, 4)
+            else onChange(i, (cur) => Math.min(4, Math.max(1, cur + (up ? 1 : -1))) as Step)
           }
         }}
         onPointerDown={(e) => {

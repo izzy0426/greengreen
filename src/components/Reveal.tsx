@@ -28,7 +28,8 @@ export function CountUp({ value, format }: { value: number; format: (v: number) 
     return () => c.stop()
   }, [inView, reduce, value])
   return (
-    <span ref={ref} aria-label={format(value)}>
+    <span ref={ref}>
+      <span className="visually-hidden">{format(value)}</span>
       <span aria-hidden="true">{format(reduce ? value : v)}</span>
     </span>
   )

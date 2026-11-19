@@ -430,11 +430,44 @@
     justify-content: flex-start;
   }
 }
+/* 1279px 이하: 장면 위 정해진 자리 대신 핀을 줄지어 놓음 (결정 기록 D34) */
+@media (max-width: 1279px) {
+  .pins {
+    position: absolute;
+    left: 2%;
+    right: 140px;
+    top: 120px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    z-index: 2;
+  }
+  .pins .pin {
+    position: static;
+  }
+  .pin__line {
+    display: none;
+  }
+}
 @media (max-width: 1023px) {
   .stage {
     aspect-ratio: auto;
-    height: 560px;
+    height: 600px;
     max-height: none;
+  }
+  .meter {
+    width: 108px;
+    bottom: 64px;
+  }
+  .ticker {
+    left: 12px;
+    right: 12px;
+    transform: none;
+    max-width: none;
+    bottom: 12px;
+  }
+  .price-box {
+    bottom: 64px;
   }
   .pin__value {
     font-size: 16px;
@@ -455,25 +488,26 @@
   .minister__title {
     font-size: 15px;
   }
+  .stage {
+    height: 660px;
+  }
   .meter {
     width: 84px;
-    top: 140px;
-    bottom: 80px;
+    top: 150px;
+    bottom: 110px;
     right: 8px;
   }
-  .pin {
-    transform: scale(0.82);
-    transform-origin: top left;
-  }
-  .ticker {
+  .pins {
     left: 12px;
-    right: 12px;
-    transform: none;
-    max-width: none;
-    bottom: 12px;
+    right: 100px;
+    top: 150px;
+    gap: 6px;
   }
-  .price-box {
-    bottom: 64px;
+  .pin__card {
+    padding: 8px 12px;
+  }
+  .pin__value {
+    font-size: 15px;
   }
   .lab-toast {
     left: 12px;

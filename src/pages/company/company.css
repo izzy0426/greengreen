@@ -102,6 +102,15 @@
 .unit-row.is-selected {
   background: var(--color-bg-brand-soft);
 }
+.unit-row.is-selected .caption,
+.unit-row.is-selected .unit-row__rank,
+.unit-row:hover .caption,
+.unit-row:hover .unit-row__rank,
+.intro-banner .secondary,
+.search__panel li.is-active .search__sector,
+.search__panel li.is-active .search__cost {
+  color: #3f4741;
+}
 .unit-row.is-selected .unit-row__name > span:first-child {
   color: var(--color-text-brand);
   font-weight: 700;
@@ -402,4 +411,9 @@
   .search__panel li {
     flex-wrap: wrap;
   }
+}
+
+.unit-list__more {
+  padding: 12px;
+  text-align: center;
 }

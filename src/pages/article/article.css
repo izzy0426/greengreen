@@ -45,8 +45,8 @@
 .hero__bg {
   position: absolute;
   inset: 0;
-  /* 장면 S2 (public/scenes/hero.webp). 파일이 없으면 진한 초록 바탕만 보임 */
-  background: url('/scenes/hero.webp') center / cover no-repeat;
+  /* 장면 S2 (명세서 6장: 히어로 배경 = S2). 파일이 없으면 진한 초록 바탕만 보임 */
+  background: url('/scenes/scene-s2.webp') center / cover no-repeat;
   animation: kenburns 24s ease-out both;
 }
 .hero__bg::after {
@@ -83,6 +83,7 @@
 .hero__title {
   font: 700 72px/1.3 var(--font-family);
   letter-spacing: -0.72px;
+  word-break: keep-all;
 }
 .hero__lead {
   font: var(--text-body-l);
@@ -510,6 +511,9 @@
 
 /* 반응형 (명세서 9장) */
 @media (max-width: 1279px) {
+  .hero__title {
+    font-size: 56px;
+  }
   .hero__inner,
   .section {
     padding-left: 64px;
@@ -612,4 +616,12 @@
   .hero__bg {
     animation: none;
   }
+}
+
+/* 연한 바탕 위 보조 글자 대비 (결정 기록 D33) */
+.card-s--brand .caption,
+.card-s--subtle .caption,
+.summary .secondary,
+.summary .caption {
+  color: #3f4741;
 }

@@ -30,8 +30,8 @@ export default function LabResultPage() {
   return (
     <main className="result">
       <HeaderActions>
-        <ButtonLink variant="ghost" to={`/lab${q}`}>← 레버로 돌아가기</ButtonLink>
-        <span title="참여자 경로를 모을 저장소를 아직 정하지 않았어요 (명세서 10장)">
+        <ButtonLink variant="ghost" to={`/lab${q}`}>← 레버<span className="hide-mobile">로 돌아가기</span></ButtonLink>
+        <span className="result-submit" title="참여자 경로를 모을 저장소를 아직 정하지 않았어요 (명세서 10장)">
           <Button disabled aria-describedby="submit-note">경로 제출하기</Button>
         </span>
       </HeaderActions>
@@ -99,7 +99,7 @@ function Body({ data, levers, combo, base, view, setView }: { data: LabData; lev
                   <p className="body-s">{l.name}{isAssumed(i, levers[i]) && <AssumptionBadge />}</p>
                   <p className="caption">{leverDetail(i, levers[i], data)}</p>
                 </div>
-                <span className="steps" aria-label={`${levers[i]}단계`}>
+                <span className="steps" role="img" aria-label={`${levers[i]}단계`}>
                   {[1, 2, 3, 4].map((s) => <i key={s} className={s <= levers[i] ? 'on' : ''} />)}
                 </span>
               </li>
@@ -128,7 +128,7 @@ function Body({ data, levers, combo, base, view, setView }: { data: LabData; lev
           <p className="caption">발전 부문 2030 탄소비용</p>
           <p className="h2">{trillion(shown.pins.powerCost2030)}조 원</p>
           <p className="caption">구매 {mt(shown.pins.powerPurchase2030)}백만 t × {priceShort(y2030(shown).price)}</p>
-          <div className="split" aria-label={`전기요금으로 ${pct(pass)}%, 한전 부채로 ${pct(1 - pass)}% (가정)`}>
+          <div className="split" role="img" aria-label={`전기요금으로 ${pct(pass)}%, 한전 부채로 ${pct(1 - pass)}% (가정)`}>
             <i style={{ width: `${pass * 100}%`, background: 'var(--color-chart-3)' }} />
             <i style={{ width: `${(1 - pass) * 100}%`, background: 'var(--color-data-neutral)' }} />
           </div>
@@ -201,7 +201,7 @@ function MeterLine({ mine, base }: { mine: number; base: number }) {
   const x = (v: number) => `${Math.min(100, Math.max(0, ((v + 0.08) / 0.16) * 100))}%`
   const s = (v: number) => `${v > 0 ? '+' : v < 0 ? '−' : ''}${pct(Math.abs(v), 1)}%`
   return (
-    <div className="meter-line" aria-label={`내 경로 ${s(mine)}, 현행 ${s(base)}`}>
+    <div className="meter-line" role="img" aria-label={`내 경로 ${s(mine)}, 현행 ${s(base)}`}>
       <div className="meter-line__labels caption"><span>← 총량 아래</span><strong>4차 총량</strong><span>총량 초과 →</span></div>
       <div className="meter-line__track">
         <span className="meter-line__cap" style={{ left: x(0) }} />

@@ -44,7 +44,8 @@ export function TrendChart({ a }: { a: ArticleData }) {
   const xs = x(2025)
   return (
     <figure className="fig">
-      <svg ref={ref} className="chart" viewBox={`0 0 ${W} ${H}`} role="img"
+      <div className="chart-scroll">
+      <svg ref={ref} className="chart chart--wide" viewBox={`0 0 ${W} ${H}`} role="img"
         aria-label={`2015~2025 실적 배출과 할당, 2026~2030 예측. 2030년 예측 배출 ${mt(f[4].emis)}백만 t, 무상할당 ${mt(f[4].freeAlloc)}백만 t`}>
         {ticks.map((t) => (
           <g key={t}>
@@ -73,6 +74,7 @@ export function TrendChart({ a }: { a: ArticleData }) {
           <text x={0} y={4} textAnchor="middle" style={{ fill: 'white' }}>2030 구매 압력 {mt(a.purchasePressure2030)}백만 t</text>
         </g>
       </svg>
+      </div>
       <figcaption className="chart-legend">
         <span><i className="line" style={{ background: 'var(--color-chart-2)' }} />배출</span>
         <span><i className="line" style={{ background: 'var(--color-data-target)' }} />할당 (사전·순)</span>

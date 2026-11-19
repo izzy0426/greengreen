@@ -73,6 +73,20 @@
   outline-offset: -6px;
 }
 
+@media (max-width: 1023px) {
+  /* 오른쪽 버튼이 있는 화면에서 탭과 겹치지 않게 가운데 고정을 풂 */
+  .header__tabs {
+    position: static;
+    transform: none;
+    margin-left: auto;
+  }
+  .tab {
+    padding: 0 18px;
+  }
+  .header__actions {
+    margin-left: 12px;
+  }
+}
 @media (max-width: 767px) {
   .header {
     padding: 0 16px;
@@ -178,7 +192,8 @@
   border-radius: var(--radius-full);
   background: var(--color-bg-subtle);
   font: var(--text-caption);
-  color: var(--color-text-secondary);
+  /* 연한 바탕 위에서는 secondary(#6E776F)가 4.5:1에 못 미쳐 gray/700 (결정 기록 D33) */
+  color: #3f4741;
   white-space: nowrap;
 }
 .tag {
@@ -192,7 +207,7 @@
 }
 .tag--neutral {
   background: var(--color-bg-subtle);
-  color: var(--color-text-secondary);
+  color: #3f4741;
 }
 .tag--brand {
   background: var(--color-bg-brand-soft);
