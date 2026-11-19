@@ -22,6 +22,8 @@ export function Header() {
           </NavLink>
         ))}
       </nav>
+      {/* 화면별 오른쪽 버튼 자리 (실험실: 초기화 · 결과 보기) — HeaderActions로 채움 */}
+      <div className="header__actions" id="header-actions" />
     </header>
   )
 }

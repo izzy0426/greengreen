@@ -128,6 +128,20 @@ def main() -> int:
     eq("2025→2030 무상할당 변화(%)", round(w["freeAlloc"]["changeFrom2025"] * 100), -64)
     eq("매출·영업이익(조, 억)", [round(nam["revenue3y"] / 1e12, 2), round(nam["opProfit3y"] / 1e8)], [7.06, 4211])
 
+    print("── 실험실 (명세서 11장 수용 기준 2번 · 하이파이 05)")
+    L = json.loads((DATA / "lab.json").read_text(encoding="utf-8"))["combos"]
+    b, r = L["now-1"], L["now-3"]
+    eq("기본: 미터(%)·2030 배출(백만 t)", [round(b["meter"] * 100, 1), round(b["yearly"][-1]["emis"] / 1e6, 1)], [4.8, 457.0])
+    eq("감축 3단계: 2030 배출(백만 t)·미터(%)·5년 비용(조)", [round(r["yearly"][-1]["emis"] / 1e6, 1), round(r["meter"] * 100, 1), round(sum(y["cost"] for y in r["yearly"]) / 1e12, 2)], [434.2, -0.4, 9.86])
+    eq("기본 = 아티클 5년 비용(가격 4, 조)", [round(sum(y["cost"] for y in L[f"{k}-1"]["yearly"]) / 1e12, 1) for k in PK], [7.0, 11.8, 23.3, 32.2])
+    pb = b["pins"]
+    eq("05 핀: 발전 비용(조)·구매·철강 남음·석유화학 배출·무상(백만 t)",
+       [round(pb["powerCost2030"] / 1e12, 2), round(pb["powerPurchase2030"] / 1e6, 1), round(pb["steelSurplus2030"] / 1e6, 1), round(pb["petroEmis2030"] / 1e6, 1), round(pb["petroFree2030"] / 1e6, 1)],
+       [2.53, 84.3, 7.4, 46.2, 48.8])
+    eq("06 핀: 석유화학 배출(백만 t)", round(r["pins"]["petroEmis2030"] / 1e6, 1), 43.9)
+    eq("07 감축 3: 5년 구매량(백만 t)", round(sum(y["purchase"] for y in r["yearly"]) / 1e6, 1), 337.0)
+    hifi_diff("06 핀: 발전 2030 비용(조, 감축 3)", round(r["pins"]["powerCost2030"] / 1e12, 2), 2.40)
+
     print("── 하이파이와 다른 값 (데이터 기준으로 화면을 그림)")
     hifi_diff("2015~2025 순할당−배출(백만 t)", [round(h["surplus"] / 1e6, 1) for h in A["history"]],
               [-22.2, -41.9, -46.5, -45.8, -35.1, 1.4, 0.4, 20.1, 45.3, 38.4, 7.4])
