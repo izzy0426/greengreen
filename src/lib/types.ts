@@ -145,13 +145,27 @@ export interface EffPriceRow {
 export interface ArticleData {
   source: string
   hero: { cost5yNow: number; powerCostShare: number; powerEmisShare: number; shortUnits2030: number; totalUnits: number }
+  glance: {
+    emis2030: number
+    emis2026: number
+    emisChange: number
+    gapTotal2030: number
+    preAlloc2030: number
+    gapTotal5y: number
+    purchase5y: number
+    turnsLoss2030Now: number
+    turnsLoss2030Max: number
+    cost5y: PriceRecord<number>
+    price2030: PriceRecord<number>
+  }
+  powerPaidRatio: Record<string, number>
   yearly: PriceRecord<YearTotal[]>
   purchasePressure2030: number
   sectors: SectorRow[]
   grades2030: PriceRecord<Record<Grade, number>>
   turnsLoss: { base: number; byYear: PriceRecord<number[]>; bySector2030: PriceRecord<Record<string, number>> }
   concentration: {
-    top10: { id: string; name: string; sector: string; cost5y: number; riskAvg: number | null }[]
+    top10: { id: string; name: string; sector: string; cost5y: number; risk2030: number | null; noFinance: boolean; riskAvg: number | null }[]
     top10Share: number
     top10PowerCount: number
     unitsWithCost: number

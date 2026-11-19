@@ -313,3 +313,25 @@
   padding: var(--card-padding);
   min-width: 0;
 }
+
+/* Footer */
+.footer {
+  background: var(--color-bg-inverse);
+  color: rgb(255 255 255 / 0.85);
+}
+.footer__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 48px var(--page-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font: var(--text-body-s);
+}
+.footer .logo-wordmark__text {
+  color: white;
+}
+.footer__small {
+  font: var(--text-caption);
+  color: rgb(255 255 255 / 0.6);
+}

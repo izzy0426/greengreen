@@ -284,6 +284,7 @@ def build_article(d: dict, units: list[dict]) -> dict:
         u = by_u[uid]
         op = u["opProfit3y"]
         top10.append({"id": uid, "name": u["displayName"], "sector": u["sector"], "cost5y": u["cost5y"]["now"],
+                      "risk2030": u["risk2030"]["now"], "noFinance": bool(u["excludeReason"]),
                       "riskAvg": num(u["cost5y"]["now"] / 5 / op, None) if (op and op > 0 and not u["excludeReason"]) else None})
 
     # 발전 공기업 5곳 (남동·남부·동서·서부·중부)
@@ -314,6 +315,18 @@ def build_article(d: dict, units: list[dict]) -> dict:
               for case, g in rg.groupby("경우")}
 
     total_now = c5.sum()
+    pw = now[now["분석업종"] == "발전"].groupby("연도")[["유상분", "사전할당"]].sum()
+    power_paid = {str(y): num(pw.at[y, "유상분"] / pw.at[y, "사전할당"], None) for y in YEARS}
+    y26n, y30n = next(r for r in yearly["now"] if r["year"] == 2026), next(r for r in yearly["now"] if r["year"] == 2030)
+    glance = {
+        "emis2030": y30n["emis"], "emis2026": y26n["emis"], "emisChange": num((y30n["emis"] - y26n["emis"]) / y26n["emis"], None),
+        "gapTotal2030": num(y30n["emis"] - y30n["preAlloc"]), "preAlloc2030": y30n["preAlloc"],
+        "gapTotal5y": num(sum(r["emis"] - r["preAlloc"] for r in yearly["now"])),
+        "purchase5y": num(sum(r["purchase"] for r in yearly["now"])),
+        "turnsLoss2030Now": turns["now"][-1], "turnsLoss2030Max": turns["max"][-1],
+        "cost5y": {p: num(sum(r["cost"] for r in yearly[p])) for p in PRICE_KEYS},
+        "price2030": {p: yearly[p][-1]["price"] for p in PRICE_KEYS},
+    }
     power = next(s for s in sectors if s["sector"] == "발전")
     y_now = {r["year"]: r for r in yearly["now"]}
     return {
@@ -325,6 +338,8 @@ def build_article(d: dict, units: list[dict]) -> dict:
             "shortUnits2030": int((n30["모자라는양"] > 0).sum()),
             "totalUnits": len(units),
         },
+        "glance": glance,
+        "powerPaidRatio": power_paid,
         "yearly": yearly,
         "purchasePressure2030": num(y_now[2030]["emis"] - y_now[2030]["freeAlloc"]),
         "sectors": sectors,

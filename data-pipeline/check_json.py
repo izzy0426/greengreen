@@ -91,6 +91,16 @@ def main() -> int:
        [8.50, 0.73, 0.50, 0.47, 0.27, 0.22, 0.16])
     eq("철강 배출→비용 비중(%)", [round(sec["철강"]["emisShare"] * 100, 1), round(sec["철강"]["costShare"]["now"] * 100, 1)], [18.8, 1.4])
 
+    G = A["glance"]
+    eq("한눈에 KPI: 2030 배출·2026 배출·변화(%)", [round(G["emis2030"] / 1e6, 1), round(G["emis2026"] / 1e6, 1), round(G["emisChange"] * 100, 1)], [457.0, 528.7, -13.6])
+    eq("한눈에 KPI: 총량 넘는 배출 2030·사전할당·5년(백만 t)", [round(G["gapTotal2030"] / 1e6, 1), round(G["preAlloc2030"] / 1e6, 1), round(G["gapTotal5y"] / 1e6, 1)], [20.9, 436.1, 86.3])
+    eq("한눈에 KPI: 5년 구매량(백만 t)", round(G["purchase5y"] / 1e6, 1), 403.7)
+    eq("Q2 인사이트: 2030 실제 부담/시장가(%)·발전(%)", [round(A["effPrice"]["전체"][-1]["shareOfMarket"] * 100, 1), round(A["effPrice"]["발전"][-1]["shareOfMarket"] * 100)], [25.1, 60])
+    eq("Q2: 3차 규칙 2030(원)", A["effPrice"]["전체"][-1]["rule3"], 1471)
+
+    eq("발전 유상 비율 2026→2030(%)", [round(A["powerPaidRatio"]["2026"] * 100), round(A["powerPaidRatio"]["2030"] * 100)], [15, 50])
+    eq("TOP 1 2030 위험도(배)", round(A["concentration"]["top10"][0]["risk2030"], 1), 1.2)
+
     print("── 04 한국남동발전 (하이파이 표기)")
     yn = {r["year"]: r for r in d["years"]["now"]}
     eq("2030 위험도(%)", round(yn[2030]["risk"] * 100), 124)
