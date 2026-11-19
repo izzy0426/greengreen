@@ -231,9 +231,8 @@
   right: 0;
   bottom: 0;
   border-radius: 18px;
-  background: linear-gradient(to top, #2db563 0%, #2db563 45%, #f5d24a 75%, #f5a04a 100%);
-  background-size: 100% 300%;
-  background-position: bottom;
+  /* 총량 초과: 위로 갈수록 노랑·주황 (실험실 에셋 4번) */
+  background: linear-gradient(to top, #2db563 0%, #2db563 55%, #f5d24a 85%, #f5a04a 100%);
 }
 .meter__fill.is-in {
   background: var(--color-data-positive);
@@ -245,21 +244,25 @@
   right: -20px;
   height: 2px;
   background: rgb(255 255 255 / 0.85);
+  /* 채움 막대보다 위에 그려 선과 글자가 가려지지 않게 */
+  z-index: 2;
 }
 .meter__cap em {
   position: absolute;
   left: 50%;
   transform: translate(-50%, -130%);
+  padding: 1px 8px;
+  border-radius: 999px;
+  background: rgb(27 32 28 / 0.85);
   font: var(--text-caption);
   font-style: normal;
   white-space: nowrap;
-  text-decoration: underline;
 }
 .meter__value {
   position: absolute;
   left: 50%;
   transform: translate(-50%, 50%);
-  z-index: 1;
+  z-index: 3;
   padding: 4px 12px;
   border-radius: 999px;
   background: white;
