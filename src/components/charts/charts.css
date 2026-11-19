@@ -1,0 +1,57 @@
+.chart {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+  font-family: var(--font-family);
+}
+.chart text {
+  font-size: 13px;
+  font-weight: 500;
+  fill: var(--color-text-secondary);
+}
+.chart .grid {
+  stroke: var(--color-border-default);
+  stroke-width: 1;
+}
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  font: var(--text-caption);
+  color: var(--color-text-secondary);
+}
+.chart-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.chart-legend i {
+  display: inline-block;
+}
+.chart-legend .line {
+  width: 18px;
+  height: 3px;
+}
+.chart-legend .swatch {
+  width: 12px;
+  height: 12px;
+  border-radius: 3px;
+  opacity: 0.35;
+}
+.chart .halo {
+  paint-order: stroke;
+  stroke: var(--color-bg-surface);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+/* 좁은 화면: 넓은 차트는 글자가 너무 작아지지 않게 최소 폭을 두고 가로 스크롤 */
+.chart-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 767px) {
+  .chart--wide {
+    min-width: 560px;
+  }
+}

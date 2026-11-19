@@ -1,0 +1,86 @@
+/* 디자인 토큰 — Figma 'Eco' 변수 컬렉션 (개발 명세서 8장) */
+:root {
+  /* Color · Semantic */
+  --color-bg-page: #fcfdfb;
+  --color-bg-surface: #ffffff;
+  --color-bg-subtle: #f1f3ef;
+  --color-bg-brand: #157a40;
+  --color-bg-brand-soft: #eff8f1;
+  --color-bg-accent: #ffdc6e;
+  --color-bg-inverse: #1b201c;
+  --color-text-primary: #1b201c;
+  --color-text-secondary: #6e776f;
+  --color-text-on-brand: #ffffff;
+  --color-text-brand: #157a40;
+  --color-border-default: #cbd1ca;
+  --color-border-strong: #1b201c;
+  --color-border-brand: #157a40;
+  --color-data-short: #f5a04a;
+  --color-data-surplus: #2c6fd1;
+  --color-data-neutral: #cbd1ca;
+  --color-data-target: #1b201c;
+  --color-data-positive: #2db563;
+  --color-status-danger: #d93a3f;
+
+  /* Color · Chart (업종 고정 순서) */
+  --color-chart-1: #1e9b54;
+  --color-chart-2: #2c6fd1;
+  --color-chart-3: #e8772e;
+  --color-chart-4: #7a5bc9;
+  --color-chart-5: #0f9c8e;
+  --color-chart-6: #c9a227;
+  --color-chart-7: #d9577a;
+  --color-chart-8: #9c5b2e;
+
+  /* Typography */
+  --font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+  --text-display: 700 64px/1.3 var(--font-family);
+  --text-h1: 700 40px/1.4 var(--font-family);
+  --text-h2: 700 28px/1.4 var(--font-family);
+  --text-h3: 700 20px/1.5 var(--font-family);
+  --text-body-l: 400 18px/1.7 var(--font-family);
+  --text-body: 400 16px/1.7 var(--font-family);
+  --text-body-s: 400 14px/1.6 var(--font-family);
+  --text-caption: 500 13px/1.5 var(--font-family);
+  --text-label: 700 14px/1.5 var(--font-family);
+  --text-number: 700 36px/1.2 var(--font-family);
+
+  /* Spacing · Radius (Figma Eco 변수) */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 12px;
+  --spacing-lg: 16px;
+  --spacing-xl: 24px;
+  --radius-lg: 20px;
+  --radius-full: 999px;
+  --green-300: #8ed3a4;
+
+  /* Layout */
+  --layout-max: 1440px;
+  --content-max: 1280px;
+  --page-gutter: 80px;
+  --tabbar-height: 96px;
+  --radius-card: 16px;
+  --radius-card-lg: 20px;
+  --radius-pill: 999px;
+  --card-padding: 24px;
+  --gap-sm: 16px;
+  --gap-md: 24px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --page-gutter: 40px;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --page-gutter: 20px;
+    --text-display: 700 40px/1.3 var(--font-family);
+    --text-h1: 700 30px/1.4 var(--font-family);
+  }
+}

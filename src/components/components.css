@@ -1,0 +1,365 @@
+/* 공통 컴포넌트 — Figma 'DS · Main components' (67:2062) */
+
+/* Logo */
+.logo-symbol {
+  display: block;
+  flex-shrink: 0;
+}
+.logo-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-wordmark__text {
+  font-family: var(--font-family);
+  font-weight: 900;
+  font-size: 22px;
+  letter-spacing: -0.66px;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+/* Header · Tab */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  height: var(--tabbar-height);
+  display: flex;
+  align-items: center;
+  padding: 0 40px;
+  background: var(--color-bg-surface);
+  border-bottom: 1px solid var(--color-border-default);
+}
+.header__actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header__logo {
+  text-decoration: none;
+  display: inline-flex;
+}
+.header__tabs {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  height: 100%;
+}
+.tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: 0 36px;
+  font: 500 20px/1.5 var(--font-family);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  white-space: nowrap;
+}
+.tab:hover {
+  color: var(--color-text-primary);
+}
+.tab.is-active {
+  font-weight: 700;
+  color: var(--color-text-primary);
+  border-bottom-color: var(--color-border-brand);
+}
+.tab:focus-visible {
+  outline-offset: -6px;
+}
+
+@media (max-width: 1023px) {
+  /* 오른쪽 버튼이 있는 화면에서 탭과 겹치지 않게 가운데 고정을 풂 */
+  .header__tabs {
+    position: static;
+    transform: none;
+    margin-left: auto;
+  }
+  .tab {
+    padding: 0 18px;
+  }
+  .header__actions {
+    margin-left: 12px;
+  }
+}
+@media (max-width: 767px) {
+  .header {
+    padding: 0 16px;
+  }
+  .logo-wordmark__text {
+    display: none;
+  }
+  .header__tabs {
+    position: static;
+    transform: none;
+    margin-left: auto;
+  }
+  .header__actions {
+    margin-left: 4px;
+  }
+  .header__actions .btn {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+  .tab {
+    padding: 0 12px;
+    font-size: 16px;
+  }
+}
+
+/* Button */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-full);
+  font: 700 15px/1.7 var(--font-family);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 0;
+  transition: background-color 0.15s, transform 0.15s;
+}
+.btn--primary {
+  background: var(--color-bg-brand);
+  color: var(--color-text-on-brand);
+}
+.btn--primary:hover {
+  background: #0f6233;
+}
+.btn--secondary {
+  background: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  border: 1.5px solid var(--color-border-strong);
+}
+.btn--secondary:hover {
+  background: var(--color-bg-subtle);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-brand);
+}
+.btn--ghost:hover {
+  text-decoration: underline;
+}
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Chip */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  font: 400 14px/1.6 var(--font-family);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chip:hover {
+  border-color: var(--color-text-secondary);
+}
+.chip.is-selected {
+  background: var(--color-bg-brand-soft);
+  border: 1.5px solid var(--color-border-brand);
+  color: var(--color-text-brand);
+  font-weight: 700;
+  font-size: 13px;
+  /* 테두리 두께 차이로 크기가 바뀌지 않게 */
+  padding: calc(var(--spacing-sm) - 0.5px) calc(var(--spacing-lg) - 0.5px);
+}
+
+/* Hashtag · Tag */
+.hashtag {
+  display: inline-flex;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-subtle);
+  font: var(--text-caption);
+  /* 연한 바탕 위에서는 secondary(#6E776F)가 4.5:1에 못 미쳐 gray/700 (결정 기록 D33) */
+  color: #3f4741;
+  white-space: nowrap;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font: var(--text-caption);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+.tag--neutral {
+  background: var(--color-bg-subtle);
+  color: #3f4741;
+}
+.tag--brand {
+  background: var(--color-bg-brand-soft);
+  color: var(--color-text-brand);
+}
+.tag--short {
+  background: #fdeedd;
+  color: #8a4a0b;
+}
+.tag--surplus {
+  background: #e2eefb;
+  color: #1d4f99;
+}
+.tag--danger {
+  background: #fbe4e5;
+  color: #a5262b;
+}
+.tag--assume {
+  background: var(--color-bg-accent);
+  color: var(--color-text-primary);
+  margin-left: 6px;
+}
+
+/* Section Header */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+.section-header__title {
+  font: var(--text-h3);
+  color: var(--color-text-primary);
+}
+.section-header__more {
+  font: var(--text-caption);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+}
+.section-header__more:hover {
+  color: var(--color-text-primary);
+}
+
+/* KPI Card */
+.kpi-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xl);
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  min-width: 0;
+}
+.kpi-card__label {
+  font: var(--text-body-s);
+  color: var(--color-text-secondary);
+}
+.kpi-card__value {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.kpi-card__number {
+  font: var(--text-number);
+  color: var(--color-text-primary);
+  font-variant-numeric: tabular-nums;
+}
+.kpi-card__unit {
+  font: var(--text-body-s);
+  color: var(--color-text-secondary);
+}
+.kpi-card__note {
+  font: var(--text-caption);
+  color: var(--color-text-brand);
+}
+
+/* Floating CTA */
+.floating-cta {
+  position: fixed;
+  right: 40px;
+  bottom: 40px;
+  z-index: 40;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-inverse);
+  color: var(--color-text-on-brand);
+  font: 700 15px/1.7 var(--font-family);
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgb(27 32 28 / 0.2);
+  transition: transform 0.2s var(--ease-out), bottom 0.3s var(--ease-out);
+}
+.floating-cta:hover {
+  transform: translateY(-2px);
+}
+.floating-cta__arrow {
+  font-size: 20px;
+  line-height: 1.5;
+}
+@media (max-width: 767px) {
+  .floating-cta {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+/* Legend Item */
+.legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font: var(--text-body-s);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+.legend-item__line {
+  width: 24px;
+  height: 3px;
+  background: var(--color-data-target);
+}
+
+/* Card (공통 상자) */
+.card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--card-padding);
+  min-width: 0;
+}
+
+/* Footer */
+.footer {
+  background: var(--color-bg-inverse);
+  color: rgb(255 255 255 / 0.85);
+}
+.footer__inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 48px var(--page-gutter);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font: var(--text-body-s);
+}
+.footer .logo-wordmark__text {
+  color: white;
+}
+.footer__small {
+  font: var(--text-caption);
+  color: rgb(255 255 255 / 0.6);
+}
