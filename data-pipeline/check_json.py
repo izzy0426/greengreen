@@ -106,6 +106,18 @@ def main() -> int:
     eq("위험도 있는 발전 단위 수", len(gen), 27)
     eq("발전 안 위험도 순위", 1 + [u["name"] for u in gen].index("한국남동발전"), 4)
 
+    w = d["why"]
+    eq("왜: 무상할당 2026→2030(백만 t, %)", [round(w["freeAlloc"]["start"] / 1e6, 1), round(w["freeAlloc"]["end"] / 1e6, 1), round(w["freeAlloc"]["change"] * 100)], [17.8, 7.3, -59])
+    eq("왜: 유상 비율(%)", [round(w["paidRatio"]["start"] * 100), round(w["paidRatio"]["end"] * 100)], [15, 50])
+    eq("왜: 배출(백만 t, %)", [round(w["emis"]["start"] / 1e6, 1), round(w["emis"]["end"] / 1e6, 1), round(w["emis"]["change"] * 100)], [29.1, 24.6, -15])
+    eq("왜: 이월 잔고 다 쓴 해", w["bank"]["emptyYear"], 2026)
+    eq("KPI 5년 구매량(백만 t)", round(sum(r["purchase"] for r in d["years"]["now"]) / 1e6, 1), 66.8)
+    eq("KPI 2030 무상할당·2025 무상할당(백만 t)", [round(yn[2030]["freeAlloc"] / 1e6, 2), round(yn[2030]["freeAlloc2025"] / 1e6, 1)], [7.27, 20.0])
+    eq("KPI 2030 실효가격(원)·시장가 대비(%)", [round(yn[2030]["effPrice"]), round(yn[2030]["effPriceRatio"] * 100)], [21132, 70])
+    eq("5년 비용 순위", nam["rank5y"], 1)
+    eq("2025→2030 무상할당 변화(%)", round(w["freeAlloc"]["changeFrom2025"] * 100), -64)
+    eq("매출·영업이익(조, 억)", [round(nam["revenue3y"] / 1e12, 2), round(nam["opProfit3y"] / 1e8)], [7.06, 4211])
+
     print("── 하이파이와 다른 값 (데이터 기준으로 화면을 그림)")
     hifi_diff("2015~2025 순할당−배출(백만 t)", [round(h["surplus"] / 1e6, 1) for h in A["history"]],
               [-22.2, -41.9, -46.5, -45.8, -35.1, 1.4, 0.4, 20.1, 45.3, 38.4, 7.4])

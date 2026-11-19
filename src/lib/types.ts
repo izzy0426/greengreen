@@ -37,6 +37,8 @@ export interface UnitSummary {
   risk2030: PriceRecord<number | null>
   /** 2030 모자라는 양(t). 음수면 남음 */
   shortfall2030: number
+  /** 5년 탄소비용(지금 가격) 순위. 비용 0이면 null */
+  rank5y: number | null
 }
 
 /** unit/{id}.json — 가격 4 × 연도 5 */
@@ -61,6 +63,10 @@ export interface UnitYearRow {
   saleRevenue: number
   netCost: number
   effPrice: number | null
+  /** 실효가격 ÷ 시장가 */
+  effPriceRatio: number | null
+  /** 유상분 ÷ 사전할당 */
+  paidRatio: number | null
   risk: number | null
   /** 탄소비용 반영 후 영업이익률 */
   marginAfter: number | null
@@ -68,7 +74,16 @@ export interface UnitYearRow {
   turnsLoss: boolean
 }
 
+/** 04 '왜 이렇게 나왔나' — 지금 가격 기준 */
+export interface UnitWhy {
+  freeAlloc: { start: number; end: number; change: number | null; y2025: number | null; changeFrom2025: number | null }
+  paidRatio: { start: number | null; end: number | null }
+  emis: { start: number; end: number; change: number | null }
+  bank: { start2026: number; used5y: number; emptyYear: number | null; end2030: number; shareOfNeed: number | null }
+}
+
 export interface UnitDetail extends UnitSummary {
+  why: UnitWhy
   years: PriceRecord<UnitYearRow[]>
 }
 

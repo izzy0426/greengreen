@@ -3,13 +3,14 @@ import { Header } from './components/Header'
 import DesignSystemPage from './pages/DesignSystemPage'
 import ArticlePage from './pages/article/ArticlePage'
 import CompanyPage from './pages/company/CompanyPage'
+import { MotionConfig } from 'framer-motion'
 import LabPage from './pages/lab/LabPage'
 import LabResultPage from './pages/lab-result/LabResultPage'
 
 /** 라우팅 — 개발 명세서 3장 */
 export default function App() {
   return (
-    <>
+    <MotionConfig reducedMotion="user">
       <Header />
       <Routes>
         <Route path="/" element={<ArticlePage />} />
@@ -20,6 +21,6 @@ export default function App() {
         <Route path="/_ds" element={<DesignSystemPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </>
+    </MotionConfig>
   )
 }

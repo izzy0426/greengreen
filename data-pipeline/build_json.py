@@ -66,7 +66,7 @@ def num(v, digits: int | None = 0):
 
 def write_json(path: Path, obj) -> int:
     path.parent.mkdir(parents=True, exist_ok=True)
-    text = json.dumps(obj, ensure_ascii=False, separators=(",", ":"))
+    text = json.dumps(obj, ensure_ascii=False, separators=(",", ":"), allow_nan=False)  # NaN이 섞이면 여기서 멈춤
     path.write_text(text, encoding="utf-8")
     return len(text.encode("utf-8"))
 
@@ -85,7 +85,14 @@ def load(raw: Path) -> dict:
     M["grade"] = M["등급"].map(GRADE_MAP)
     assert M["price"].notna().all(), f"모르는 가격 시나리오: {set(M.loc[M['price'].isna(), '가격시나리오'])}"
     assert M["grade"].notna().all(), f"모르는 등급: {set(M.loc[M['grade'].isna(), '등급'])}"
+    # 업종이 비어 있는 단위: 결과표·EDA 패널 모두 없음 (F0449 (주)박원) → '업종 없음' (결정 기록 D11)
+    missing = M.loc[M["분석업종"].isna(), "분석단위ID"].unique()
+    if len(missing):
+        print(f"업종 없음으로 표시: {list(missing)}")
+    M["분석업종"] = M["분석업종"].fillna("업종 없음")
     M["key"] = M["분석단위ID"].map(unit_key)
+    # 유상 비율 = 유상분 ÷ 사전할당 (명세서 4장 lab-base 정의)
+    M["유상비율"] = (M["유상분"] / M["사전할당"]).where(M["사전할당"] > 0)
     assert M.drop_duplicates("분석단위ID")["key"].is_unique, "파일 키 충돌"
     return {
         "M": M,
@@ -137,7 +144,36 @@ def build_units(M: pd.DataFrame) -> list[dict]:
             "shortfall2030": num(s30.at[uid]),
         })
     rows.sort(key=lambda u: -u["cost5y"]["now"])
+    # 5년 비용 순위 (지금 가격, 비용 > 0인 단위만. 비용 0이면 None)
+    for i, u in enumerate(rows):
+        u["rank5y"] = i + 1 if u["cost5y"]["now"] > 0 else None
     return rows
+
+
+def build_why(g: pd.DataFrame) -> dict:
+    """04 '왜 이렇게 나왔나' 요인 — 지금 가격 기준. 이월·할당·배출은 가격과 무관.
+    bar = 막대 길이(0~1). 무상할당·배출은 변화율 절댓값, 유상 비율은 상승 폭(%p), 이월은 5년 이월 사용 ÷ 5년 모자란 양(+)."""
+    n = g[g["price"] == "now"].sort_values("연도").set_index("연도")
+    f0, f1 = n.at[2026, "무상할당"], n.at[2030, "무상할당"]
+    e0, e1 = n.at[2026, "예측배출"], n.at[2030, "예측배출"]
+    p0, p1 = n.at[2026, "유상비율"], n.at[2030, "유상비율"]
+    bank0 = n.at[2026, "이월잔고_연초"]
+    bank_use = n["이월사용"].sum()
+    need = n["모자라는양"].clip(lower=0).sum()
+    empty = None
+    if bank0 > 0:
+        z = n[(n["이월잔고"] < 1)]
+        empty = int(z.index[0]) if len(z) else None
+    chg = lambda a, b: (b - a) / a if a and a > 0 else None
+    f25 = n.at[2030, "무상할당_2025"]
+    return {
+        "freeAlloc": {"start": num(f0), "end": num(f1), "change": num(chg(f0, f1), None),
+                      "y2025": num(f25), "changeFrom2025": num(chg(f25, f1), None) if pd.notna(f25) else None},
+        "paidRatio": {"start": num(p0, None), "end": num(p1, None)},
+        "emis": {"start": num(e0), "end": num(e1), "change": num(chg(e0, e1), None)},
+        "bank": {"start2026": num(bank0), "used5y": num(bank_use), "emptyYear": empty, "end2030": num(n.at[2030, "이월잔고"]),
+                 "shareOfNeed": num(bank_use / need, None) if need > 0 else None},
+    }
 
 
 def pack_units(units: list[dict]) -> dict:
@@ -168,6 +204,8 @@ UNIT_YEAR_COLS = {
     "saleRevenue": ("판매수입", 0),
     "netCost": ("순비용", 0),
     "effPrice": ("실효탄소가격", 1),
+    "effPriceRatio": ("실효가격_비율", None),
+    "paidRatio": ("유상비율", None),
     "risk": ("위험도", None),
     "marginAfter": ("반영후이익률", None),
 }
@@ -189,7 +227,7 @@ def build_unit_detail(units: list[dict], M: pd.DataFrame) -> dict[str, dict]:
                  "turnsLoss": bool(r["적자전환"])}
                 for _, r in gp.iterrows()
             ]
-        out[u["key"]] = {**u, "years": years}
+        out[u["key"]] = {**u, "why": build_why(g), "years": years}
     return out
 
 
