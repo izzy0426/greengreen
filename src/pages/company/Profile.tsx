@@ -1,5 +1,5 @@
 // 기업 프로필 — 원본 페이지 show() 를 그대로 옮김 (문장 규칙 포함)
-import { HBars, Lines, niceMax } from './charts'
+import { Fit, HBars, Lines, niceMax } from './charts'
 import { buy5, fmt, man, SCENARIO_PRICE, SCENARIOS, shortName, type Company, type CompanyStore } from './companyData'
 
 function ScnBadge() {
@@ -209,9 +209,10 @@ function Trend({ u }: { u: Company }) {
   const vmax = Math.max(...[...E, ...A, ...P, ...FE].filter((v): v is number => v != null), 0.1)
   return (
     <>
+      <Fit fallback={680}>{(w) => (
       <Lines
         label={`${u.n} 배출량과 할당량 추이, 2015–2030`}
-        W={680}
+        W={w}
         H={240}
         cats={yrs.map((y) => '’' + String(y).slice(2))}
         series={[
@@ -223,9 +224,10 @@ function Trend({ u }: { u: Company }) {
         yl="만 t"
         xl="연도"
         max={niceMax(vmax * 1.1)}
-        every={2}
+        every={w < 480 ? 3 : 2}
         td={vmax < 10 ? 1 : 0}
       />
+      )}</Fit>
       <div className="legend">
         <span><i style={{ background: 'var(--green)' }} />배출량</span>
         <span><i style={{ background: 'var(--c-orange)' }} />할당량 (1–3차)</span>
@@ -247,15 +249,17 @@ function Peers({ u, store }: { u: Company; store: CompanyStore }) {
     <div className="pc">
       <h4>{u.s || '업종'} 업종 내 위치</h4>
       {peers.length ? (
+        <Fit fallback={480}>{(w) => (
         <HBars
           label={`${u.s} 업종 2025년 배출량 상위 기업과 ${u.n} 비교`}
-          W={480}
+          W={w}
           H={300}
           items={peers.map((x) => ({ k: shortName(x.n).slice(0, 10), v: x._e / 1e4, t: man(x._e), c: x === u ? 'var(--green)' : 'var(--leaf)' }))}
           left={120}
           right={60}
           xl="2025 배출량 (만 t)"
         />
+        )}</Fit>
       ) : (
         <p className="cap">2025년 배출 자료 없음</p>
       )}

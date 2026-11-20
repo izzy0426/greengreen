@@ -2,7 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { Footer } from '../../components/Footer'
 import { useAsync } from '../../hooks/useAsync'
-import { Bars, HBars } from './charts'
+import { Bars, Fit, HBars } from './charts'
 import { buyGroup, filterSort, fmt, loadCompanies, man, suggest, type Company, type CompanyStore, type SortKey } from './companyData'
 import { Profile } from './Profile'
 import './company.css'
@@ -101,9 +101,10 @@ function CompanyBody({ store }: { store: CompanyStore }) {
       <section className="cd" aria-labelledby="co-sec-h">
         <h2 id="co-sec-h">2025년 업종별 배출 (백만 t) · 막대 선택 시 해당 업종 필터</h2>
         <div className="scroll-x">
+        <Fit min={720} fallback={1060}>{(w) => (
         <Bars
           label="2025년 업종별 배출 상위 14개 업종"
-          W={1060}
+          W={w}
           H={250}
           cats={ss.map((x) => x[0])}
           values={ss.map((x) => +(x[1] / 1e6).toFixed(1))}
@@ -117,6 +118,7 @@ function CompanyBody({ store }: { store: CompanyStore }) {
           onPick={pickSector}
           pickLabel={(c, v) => `${c} ${v}백만 t, 이 업종으로 목록 거르기`}
         />
+        )}</Fit>
         </div>
         <p className="desc">2025년 인증 배출량의 업종별 합계. 막대를 누르면 해당 업종 기업만 아래 목록에 표시된다.</p>
       </section>
@@ -125,9 +127,10 @@ function CompanyBody({ store }: { store: CompanyStore }) {
         <h2 id="co-sig-h">
           4차 배출권 구매 필요 여부별 2025년 배출 (%) <span className="scn">시나리오</span>
         </h2>
+        <Fit fallback={1060}>{(w) => (
         <HBars
           label="4차 배출권 구매 필요 여부별 2025년 배출 비중"
-          W={1060}
+          W={w}
           H={150}
           max={100}
           left={104}
@@ -139,6 +142,7 @@ function CompanyBody({ store }: { store: CompanyStore }) {
             { k: '분석 대상 아님', v: (groups.na / tot) * 100, c: 'var(--c-gray)' },
           ].map((it) => ({ ...it, t: fmt(it.v, 1) + '%' }))}
         />
+        )}</Fit>
         <p className="desc">
           계산 엔진의 2026–2030년 예측으로 나눈 결과다. 구매가 필요 없는 기업은 배출권 가격이 올라도 구매 비용이 0원으로 계산된다. 기업을 선택하면 맨 위에 그 기업의 계산 결과가 표시된다.
         </p>

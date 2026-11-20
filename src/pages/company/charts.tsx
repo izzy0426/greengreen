@@ -1,4 +1,5 @@
 // 기업 페이지 SVG 차트 — 원본 페이지의 bars / hbars / lines 함수를 같은 좌표 계산으로 옮김
+import { useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { fmt } from './companyData'
 
 export function niceMax(v: number) {
@@ -192,5 +193,25 @@ export function Lines({ label, W, H, cats, series, max, every = 1, yl, xl, td = 
         )
       })}
     </svg>
+  )
+}
+
+/** 부모 폭을 재서 차트 viewBox 폭으로 씀 — 글자가 화면 크기와 상관없이 같은 크기로 보이게 */
+export function Fit({ min = 0, fallback, children }: { min?: number; fallback: number; children: (w: number) => ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null)
+  const [w, setW] = useState(0)
+  useLayoutEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const set = () => setW(Math.round(el.clientWidth))
+    set()
+    const ro = new ResizeObserver(set)
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+  return (
+    <div ref={ref} className="fit">
+      {children(Math.max(min, w || fallback))}
+    </div>
   )
 }
