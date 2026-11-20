@@ -575,7 +575,7 @@
   color: var(--muted);
   margin-left: 2px;
 }
-.co .meter {
+.co .co-meter {
   height: 10px;
   background: var(--tint);
   border: var(--border);
@@ -583,7 +583,7 @@
   position: relative;
   margin-top: 10px;
 }
-.co .meter i {
+.co .co-meter i {
   position: absolute;
   top: -1px;
   bottom: -1px;
@@ -591,14 +591,14 @@
   border-radius: var(--radius-pill);
   background: var(--green-2);
 }
-.co .meter u {
+.co .co-meter u {
   position: absolute;
   top: -6px;
   width: 2px;
   height: 20px;
   background: var(--ink);
 }
-.co .meter u.meter__100 {
+.co .co-meter u.co-meter__100 {
   width: 1px;
   background: var(--muted);
 }

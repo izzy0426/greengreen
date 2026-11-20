@@ -66,10 +66,10 @@ function RatioCard({ u, store }: { u: Company; store: CompanyStore }) {
         <small>%</small>
       </span>
       <p className="cap">100%보다 크면 받은 할당보다 더 배출했다는 뜻 · 할당보다 더 배출한 해 {R.short}/5</p>
-      <div className="meter" aria-hidden="true">
+      <div className="co-meter" aria-hidden="true">
         <i style={{ width: `${(pos * 100).toFixed(1)}%` }} />
         <u style={{ left: `${(mp * 100).toFixed(1)}%` }} />
-        <u className="meter__100" style={{ left: `${((1 / 1.6) * 100).toFixed(1)}%` }} />
+        <u className="co-meter__100" style={{ left: `${((1 / 1.6) * 100).toFixed(1)}%` }} />
       </div>
       <p className="cap">
         막대: 이 기업 · 검은 선: {u.s} 업종 중앙값 {Math.round(med.m * 100)}% ({med.n}곳) · 회색 선: 100%

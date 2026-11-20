@@ -92,6 +92,13 @@ const rs = await page.$$eval('.results .rs', (els) => [...new Set(els.map((e) =>
 ok(`철강 막대 → 업종 ${sec}, 목록 업종 ${rs.join(',')}`, sec === '철강' && rs.join() === '철강')
 ok(`목록 최대 80곳`, (await page.$$eval('.results li', (l) => l.length)) <= 80)
 
+// 실험실을 먼저 연 뒤에도 3차 비율 막대가 깨지지 않는지 (실험실 .meter와 이름 충돌 회귀)
+await page.goto(`${base}/lab`, { waitUntil: 'networkidle0' })
+await page.click('a[href="/company"]')
+await page.waitForSelector('.co-meter')
+const mh = await page.$eval('.co-meter', (e) => Math.round(e.getBoundingClientRect().height))
+ok(`실험실 → 기업 이동 후 비율 막대 높이 ${mh}px`, mh === 10)
+
 ok('콘솔 오류 없음', errors.length === 0)
 if (errors.length) console.log(errors)
 await browser.close()
