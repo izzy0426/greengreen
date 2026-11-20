@@ -1,17 +1,17 @@
 import symbol from '../assets/logo-symbol.svg'
 import './components.css'
 
-/** Logo / Symbol — 영수증(청구서) + 새싹. 최소 24px */
-export function LogoSymbol({ size = 40 }: { size?: number }) {
+/** 로고 심볼 — 초록 원 + 잎 (최종 DS Header) */
+export function LogoSymbol({ size = 30 }: { size?: number }) {
   return <img src={symbol} width={size} height={size} alt="" className="logo-symbol" />
 }
 
-/** Logo / Wordmark — 헤더용 가로 로고 */
-export function LogoWordmark() {
+/** 가로 로고 — 헤더·푸터 */
+export function LogoWordmark({ size = 30 }: { size?: number }) {
   return (
     <span className="logo-wordmark">
-      <LogoSymbol size={34} />
-      <span className="logo-wordmark__text">탄소청구서</span>
+      <LogoSymbol size={size} />
+      <span className="logo-wordmark__text">배출권 길라잡이</span>
     </span>
   )
 }

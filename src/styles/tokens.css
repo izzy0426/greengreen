@@ -1,77 +1,121 @@
-/* 디자인 토큰 — Figma 'Eco' 변수 컬렉션 (개발 명세서 8장) */
+/* 디자인 토큰 — Figma 「최종 / Primitives」「최종 / Color」 (배출권 길라잡이 최종 DS 173:2151)
+   예전 Eco 토큰 이름(--color-*)은 그대로 두고 값만 최종 팔레트로 바꿔, 기존 화면(실험실 포함)도 같은 색을 쓴다. */
 :root {
-  /* Color · Semantic */
-  --color-bg-page: #fcfdfb;
-  --color-bg-surface: #ffffff;
-  --color-bg-subtle: #f1f3ef;
-  --color-bg-brand: #157a40;
-  --color-bg-brand-soft: #eff8f1;
-  --color-bg-accent: #ffdc6e;
-  --color-bg-inverse: #1b201c;
-  --color-text-primary: #1b201c;
-  --color-text-secondary: #6e776f;
+  /* 서피스 · 텍스트 */
+  --paper: #f7faf7;
+  --surface: #ffffff;
+  --tint: #f1f7f2;
+  --soft: #e8f4ec;
+  --soft-2: #d2eadb;
+  --hero: #eaf2ee;
+  --line: #e0e9e3;
+  --muted: #61736a;
+  --ink: #1b2a22;
+
+  /* 그린 계열 */
+  --green: #3a6b57;
+  --green-2: #6f9584;
+  --leaf: #a6d8b8;
+  --mint: #c4dccf;
+  --stage2: #2f4f43;
+  --inverse: #2a4a3e;
+  --inverse-text: #b9d2c4;
+  --teal: #3f8f8a;
+
+  /* 포인트 · 데이터 */
+  --sun: #f2c85a;
+  --amber: #c27d22;
+  --amber-soft: #fbf0dc;
+  --red: #c4553f;
+  --c-orange: #d9822b;
+  --c-blue: #3f6fb5;
+  --c-gray: #aeb9c0;
+  --c-sky: #78aedb;
+  --blue: #4a7fb0;
+  --blue-soft: #e6eff8;
+
+  /* 예전 시맨틱 이름 → 최종 값 */
+  --color-bg-page: var(--paper);
+  --color-bg-surface: var(--surface);
+  --color-bg-subtle: var(--tint);
+  --color-bg-brand: var(--green);
+  --color-bg-brand-soft: var(--soft);
+  --color-bg-accent: var(--sun);
+  --color-bg-inverse: var(--inverse);
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--muted);
   --color-text-on-brand: #ffffff;
-  --color-text-brand: #157a40;
-  --color-border-default: #cbd1ca;
-  --color-border-strong: #1b201c;
-  --color-border-brand: #157a40;
-  --color-data-short: #f5a04a;
-  --color-data-surplus: #2c6fd1;
-  --color-data-neutral: #cbd1ca;
-  --color-data-target: #1b201c;
-  --color-data-positive: #2db563;
-  --color-status-danger: #d93a3f;
+  --color-text-brand: var(--green);
+  --color-border-default: var(--line);
+  --color-border-strong: var(--ink);
+  --color-border-brand: var(--green-2);
+  --color-data-short: var(--c-orange);
+  --color-data-surplus: var(--c-blue);
+  --color-data-neutral: var(--c-gray);
+  --color-data-target: var(--ink);
+  --color-data-positive: var(--green);
+  --color-status-danger: var(--red);
+  --green-300: var(--leaf);
 
-  /* Color · Chart (업종 고정 순서) */
-  --color-chart-1: #1e9b54;
-  --color-chart-2: #2c6fd1;
-  --color-chart-3: #e8772e;
-  --color-chart-4: #7a5bc9;
-  --color-chart-5: #0f9c8e;
-  --color-chart-6: #c9a227;
-  --color-chart-7: #d9577a;
-  --color-chart-8: #9c5b2e;
+  /* 차트 범주 순서 (chart/1~8). 2·7번(주황·하늘)은 흰 바탕 대비 3:1 미만 → 값 라벨을 직접 붙임 */
+  --color-chart-1: #3a6b57;
+  --color-chart-2: #d9822b;
+  --color-chart-3: #3f6fb5;
+  --color-chart-4: #c27d22;
+  --color-chart-5: #2f8f88;
+  --color-chart-6: #8a5fb0;
+  --color-chart-7: #78aedb;
+  --color-chart-8: #a8456a;
 
-  /* Typography */
-  --font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
-  --text-display: 700 64px/1.3 var(--font-family);
-  --text-h1: 700 40px/1.4 var(--font-family);
-  --text-h2: 700 28px/1.4 var(--font-family);
-  --text-h3: 700 20px/1.5 var(--font-family);
-  --text-body-l: 400 18px/1.7 var(--font-family);
-  --text-body: 400 16px/1.7 var(--font-family);
-  --text-body-s: 400 14px/1.6 var(--font-family);
-  --text-caption: 500 13px/1.5 var(--font-family);
-  --text-label: 700 14px/1.5 var(--font-family);
-  --text-number: 700 36px/1.2 var(--font-family);
+  /* 타이포 — 원안 Pretendard (Figma는 Noto Sans KR 대체) */
+  --font-family: 'Pretendard Variable', Pretendard, 'Apple SD Gothic Neo', 'Malgun Gothic', system-ui, sans-serif;
+  --text-display: 900 56px/1.25 var(--font-family);
+  --text-h1: 900 40px/1.3 var(--font-family);
+  --text-h2: 800 28px/1.35 var(--font-family);
+  --text-h3: 800 20px/1.4 var(--font-family);
+  --text-body-l: 400 17px/1.65 var(--font-family);
+  --text-body: 400 15px/1.65 var(--font-family);
+  --text-body-s: 400 13px/1.6 var(--font-family);
+  --text-caption: 500 12px/1.5 var(--font-family);
+  --text-label: 700 14px/1.4 var(--font-family);
+  --text-number-l: 900 38px/1.15 var(--font-family);
+  --text-number: 900 28px/1.2 var(--font-family);
+  --text-logo: 900 18px/1.2 var(--font-family);
+  --tracking-title: -0.02em;
 
-  /* Spacing · Radius (Figma Eco 변수) */
+  /* 모양 */
+  --radius-card: 18px;
+  --radius-card-lg: 18px;
+  --radius-band: 22px;
+  --radius-sheet: 28px;
+  --radius-pill: 99px;
+  --radius-full: 99px;
+  --radius-lg: 18px;
+  --border: 1px solid var(--line);
+  --border-strong: 1.5px solid var(--green-2);
+
+  /* 간격 */
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 12px;
   --spacing-lg: 16px;
   --spacing-xl: 24px;
-  --radius-lg: 20px;
-  --radius-full: 999px;
-  --green-300: #8ed3a4;
 
-  /* Layout */
+  /* 레이아웃: 본문 1200 (1440 기준 좌우 120) */
   --layout-max: 1440px;
-  --content-max: 1280px;
-  --page-gutter: 80px;
-  --tabbar-height: 96px;
-  --radius-card: 16px;
-  --radius-card-lg: 20px;
-  --radius-pill: 999px;
+  --content-max: 1200px;
+  --page-gutter: 120px;
+  --header-h: 64px;
+  --chapnav-h: 58px;
+  --tabbar-height: var(--header-h);
   --card-padding: 24px;
   --gap-sm: 16px;
   --gap-md: 24px;
 
-  /* Motion */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1279px) {
   :root {
     --page-gutter: 40px;
   }
@@ -79,8 +123,10 @@
 
 @media (max-width: 767px) {
   :root {
-    --page-gutter: 20px;
-    --text-display: 700 40px/1.3 var(--font-family);
-    --text-h1: 700 30px/1.4 var(--font-family);
+    --page-gutter: 18px;
+    --text-display: 900 36px/1.25 var(--font-family);
+    --text-h1: 900 28px/1.3 var(--font-family);
+    --text-h2: 800 22px/1.35 var(--font-family);
+    --text-number-l: 900 30px/1.15 var(--font-family);
   }
 }

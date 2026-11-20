@@ -1,6 +1,6 @@
 /* 01 아티클 — 하이파이 102:2359 */
 .article {
-  --green-900: #0c4a27;
+  --green-900: var(--stage2);
 }
 .article .eyebrow {
   font: var(--text-label);
@@ -53,7 +53,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgb(8 41 23 / 0.94), rgb(8 41 23 / 0.7) 55%, rgb(8 41 23 / 0.15));
+  background: linear-gradient(90deg, rgb(31 54 45 / 0.94), rgb(31 54 45 / 0.72) 55%, rgb(31 54 45 / 0.18));
 }
 @keyframes kenburns {
   from {
@@ -155,7 +155,7 @@
 .card-s {
   background: var(--color-bg-surface);
   border-radius: 24px;
-  box-shadow: 0 4px 18px rgb(13 31 20 / 0.07);
+  box-shadow: 0 4px 18px rgb(27 42 34 / 0.06);
   padding: 28px;
   display: flex;
   flex-direction: column;
@@ -306,7 +306,7 @@
 .role-card {
   background: var(--color-bg-surface);
   border-radius: 20px;
-  box-shadow: 0 4px 18px rgb(13 31 20 / 0.07);
+  box-shadow: 0 4px 18px rgb(27 42 34 / 0.06);
   padding: 24px;
   display: flex;
   flex-direction: column;
@@ -322,7 +322,7 @@
 /* 03 어두운 챕터 */
 .chapter--dark {
   max-width: none;
-  background: var(--green-900);
+  background: var(--inverse);
   color: white;
   padding-left: max(120px, calc((100% - var(--layout-max)) / 2 + 120px));
   padding-right: max(120px, calc((100% - var(--layout-max)) / 2 + 120px));
@@ -471,7 +471,7 @@
 .shortcut {
   background: var(--color-bg-surface);
   border-radius: 24px;
-  box-shadow: 0 4px 18px rgb(13 31 20 / 0.07);
+  box-shadow: 0 4px 18px rgb(27 42 34 / 0.06);
   padding: 32px;
   display: flex;
   flex-direction: column;
@@ -623,5 +623,117 @@
 .card-s--subtle .caption,
 .summary .secondary,
 .summary .caption {
-  color: #3f4741;
+  color: var(--muted);
+}
+
+/* 목차 바 — 헤더 아래 58px, 함께 상단 고정 (최종 / Chapter Nav) */
+.chapnav {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 45;
+  height: var(--chapnav-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.chapnav__inner {
+  max-width: calc(var(--content-max) + 2 * var(--page-gutter));
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.chapnav__k {
+  flex: none;
+  font: 500 13px/1 var(--font-family);
+  color: var(--muted);
+  margin-right: 8px;
+}
+.chapnav__list {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  min-width: 0;
+}
+.chapnav__list::-webkit-scrollbar {
+  display: none;
+}
+.chapnav__list a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: var(--radius-pill);
+  font: 500 14px/1 var(--font-family);
+  color: var(--muted);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s;
+}
+.chapnav__list a:hover {
+  color: var(--ink);
+  background: var(--tint);
+}
+.chapnav__list a.is-on {
+  background: var(--soft);
+  color: var(--green);
+  font-weight: 800;
+}
+.chapnav__n {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.chapnav__top {
+  flex: none;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font: 500 13px/1 var(--font-family);
+  cursor: pointer;
+  padding: 8px 4px;
+}
+.chapnav__top:hover {
+  color: var(--ink);
+}
+.chapnav__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 3px;
+  overflow: hidden;
+}
+.chapnav__bar i {
+  display: block;
+  height: 100%;
+  background: var(--green);
+  transform-origin: 0 50%;
+}
+.article section[id] {
+  scroll-margin-top: calc(var(--header-h) + var(--chapnav-h));
+}
+@media (max-width: 767px) {
+  .chapnav__k,
+  .chapnav__top {
+    display: none;
+  }
+  .chapnav__inner {
+    padding: 0 0 0 8px;
+  }
+  .chapnav__list a {
+    padding: 8px 12px;
+    font-size: 13.5px;
+  }
+}
+@media (max-width: 1279px) {
+  /* 목차가 넘칠 때 오른쪽이 이어진다는 표시 */
+  .chapnav__list {
+    mask-image: linear-gradient(90deg, #000 calc(100% - 28px), transparent);
+  }
 }

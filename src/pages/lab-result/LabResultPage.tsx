@@ -13,7 +13,7 @@ import { leverDetail } from '../lab/LeverBar'
 import { DEFAULT_LEVERS, LEVERS, PASS_THROUGH_EXAMPLE, isAssumed, isDefault, leverString, sceneOf, sum, y2030, type LabCombo, type LabData, type Levers } from '../lab/model'
 import { useLab } from '../lab/useLab'
 import '../lab/lab.css'
-import '../company/company.css'
+import './legacy-company.css'
 import '../article/article.css'
 import './lab-result.css'
 

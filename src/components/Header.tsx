@@ -8,22 +8,24 @@ const TABS = [
   { to: '/lab', label: '실험실', end: false },
 ]
 
-/** 상단 탭바 — 높이 96, 탭은 화면 정중앙, 현재 탭은 밑줄 (Figma Tab 67:2074) */
+/** 헤더 — 높이 64, 상단 고정, 탭은 가운데, 지금 탭은 3px 초록 밑줄 (최종 / Header) */
 export function Header() {
   return (
     <header className="header">
-      <Link to="/" className="header__logo" aria-label="탄소청구서 첫 화면">
-        <LogoWordmark />
-      </Link>
-      <nav className="header__tabs" aria-label="주 메뉴">
-        {TABS.map((t) => (
-          <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => `tab${isActive ? ' is-active' : ''}`}>
-            {t.label}
-          </NavLink>
-        ))}
-      </nav>
-      {/* 화면별 오른쪽 버튼 자리 (실험실: 초기화 · 결과 보기) — HeaderActions로 채움 */}
-      <div className="header__actions" id="header-actions" />
+      <div className="header__inner">
+        <Link to="/" className="header__logo" aria-label="배출권 길라잡이 첫 화면">
+          <LogoWordmark />
+        </Link>
+        <nav className="header__tabs" aria-label="주 메뉴">
+          {TABS.map((t) => (
+            <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => `tab${isActive ? ' is-active' : ''}`}>
+              {t.label}
+            </NavLink>
+          ))}
+        </nav>
+        {/* 화면별 오른쪽 버튼 자리 (실험실: 초기화 · 결과 보기) — HeaderActions로 채움 */}
+        <div className="header__actions" id="header-actions" />
+      </div>
     </header>
   )
 }

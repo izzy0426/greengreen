@@ -8,6 +8,7 @@ import { useAsync } from '../../hooks/useAsync'
 import { loadArticle } from '../../lib/data'
 import { int, mt, pct, priceShort, trillion, wonShort } from '../../lib/format'
 import type { ArticleData } from '../../lib/types'
+import { ChapterNav } from './ChapterNav'
 import { ButterflyBars, EffPriceLines, PriceLines, SectorCostBars, SurplusBars, TrendChart, TurnsLossBars } from './ArticleCharts'
 import './article.css'
 
@@ -20,12 +21,13 @@ export default function ArticlePage() {
   const footerRef = useRef<HTMLElement>(null)
   const ctaBottom = useFooterAvoid(footerRef)
   useEffect(() => {
-    document.title = '탄소청구서 · 2030년, 탄소 청구서는 누구에게 날아올까?'
+    document.title = '배출권 길라잡이 · 2030년, 탄소 청구서는 누구에게 날아올까?'
   }, [])
   if (error) return <main className="page"><p>데이터를 불러오지 못했어요. 새로고침해 주세요.</p></main>
   if (!a) return <main className="article" aria-busy="true"><section className="hero" /></main>
   return (
     <>
+      <ChapterNav />
       <main className="article">
         <Hero a={a} />
         <Glance a={a} />
@@ -165,7 +167,7 @@ function Glance({ a }: { a: ArticleData }) {
 function Chapter1({ a }: { a: ArticleData }) {
   const s = a.historyInsights
   return (
-    <section className="section chapter">
+    <section id="ch-1" className="section chapter">
       <div className="chapter__grid">
         <Reveal className="chapter__text">
           <p className="eyebrow">01 남는 배출권의 시절</p>
@@ -194,7 +196,7 @@ function Chapter2({ a }: { a: ArticleData }) {
   const l = all[all.length - 1]
   const price = a.glance.price2030.now
   return (
-    <section className="section chapter">
+    <section id="ch-2" className="section chapter">
       <div className="chapter__grid">
         <Reveal className="chapter__text">
           <p className="eyebrow">02 여전히 싼 탄소</p>
@@ -223,7 +225,7 @@ function Chapter3({ a }: { a: ArticleData }) {
   const steel = a.sectors.find((s) => s.sector === '철강')!
   const turnsPower = a.turnsLoss.bySector2030.now['발전'] ?? 0
   return (
-    <section className="section chapter chapter--dark">
+    <section id="ch-3" className="section chapter chapter--dark">
       <div className="chapter__grid">
         <Reveal className="chapter__text">
           <p className="eyebrow">03 청구서의 주소</p>
@@ -261,7 +263,7 @@ function Chapter4({ a }: { a: ArticleData }) {
   ]
   const total = grades.reduce((s, x) => s + x[1], 0)
   return (
-    <section className="section chapter">
+    <section id="ch-4" className="section chapter">
       <Reveal className="chapter__text chapter__text--wide">
         <p className="eyebrow">04 가장 무거운 청구서</p>
         <h2 className="h1">가장 무거운 청구서</h2>
@@ -329,7 +331,7 @@ function Roles() {
     ['03', '목소리 내기', '다음 할당계획 공청회와 전기요금 논의에서 이 숫자를 근거로 의견을 남겨 주세요.', '', ''],
   ]
   return (
-    <section className="section roles">
+    <section id="ch-5" className="section roles">
       <Reveal className="chapter__text chapter__text--wide">
         <p className="eyebrow">05 그래서, 우리는</p>
         <h2 className="h1">청구서의 주소는 아직 바뀔 수 있다</h2>
