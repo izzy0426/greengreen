@@ -347,7 +347,7 @@ function Roles() {
             <p className="h3">{title}</p>
             <p className="body-s secondary">{text}</p>
             {to && (
-              <Link className="role-card__link" to={to}>
+              <Link className="role-card__link" to={to} reloadDocument={to.startsWith('/lab')}>
                 {cta}
               </Link>
             )}

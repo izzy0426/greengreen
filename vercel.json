@@ -1,3 +1,7 @@
 {
-  "rewrites": [{ "source": "/((?!data/|scenes/|assets/).*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/lab", "destination": "/lab-sim/index.html" },
+    { "source": "/lab/:path*", "destination": "/lab-sim/index.html" },
+    { "source": "/((?!data/|scenes/|assets/|lab-sim/).*)", "destination": "/index.html" }
+  ]
 }

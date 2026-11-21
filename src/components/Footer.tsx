@@ -24,7 +24,7 @@ export const Footer = forwardRef<HTMLElement>(function Footer(_, ref) {
           <ul>
             <li><Link to="/">아티클</Link></li>
             <li><Link to="/company">기업별 배출 조회</Link></li>
-            <li><Link to="/lab">실험실</Link></li>
+            <li><Link to="/lab" reloadDocument>실험실</Link></li>
           </ul>
         </div>
       </div>

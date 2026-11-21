@@ -18,7 +18,7 @@ export function Header() {
         </Link>
         <nav className="header__tabs" aria-label="주 메뉴">
           {TABS.map((t) => (
-            <NavLink key={t.to} to={t.to} end={t.end} className={({ isActive }) => `tab${isActive ? ' is-active' : ''}`}>
+            <NavLink key={t.to} to={t.to} end={t.end} reloadDocument={t.to === '/lab'} className={({ isActive }) => `tab${isActive ? ' is-active' : ''}`}>
               {t.label}
             </NavLink>
           ))}

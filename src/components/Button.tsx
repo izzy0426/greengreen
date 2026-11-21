@@ -21,7 +21,7 @@ export function Button({ variant = 'primary', className = '', children, ...rest 
 
 export function ButtonLink({ variant = 'primary', className = '', children, to }: Common & { to: string }) {
   return (
-    <Link to={to} className={`btn btn--${variant} ${className}`}>
+    <Link to={to} reloadDocument={to.startsWith('/lab')} className={`btn btn--${variant} ${className}`}>
       {children}
     </Link>
   )
